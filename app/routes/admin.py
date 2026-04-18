@@ -1,10 +1,16 @@
-
-from fastapi import APIRouter, Depends,FastAPI
-
-from backend.app.models import Student, User
-from backend.app.routes.student import get_db
+from fastapi import APIRouter, Depends
+from app.database import SessionLocal
+from app.models import Student, User
 
 router = APIRouter(prefix="/admin")
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 @router.get("/stats")
 def stats(db=Depends(get_db)):
     students = db.query(Student).count()

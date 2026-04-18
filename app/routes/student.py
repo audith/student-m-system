@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
-from database import SessionLocal
-import crud,schemas
-
+from app.database import SessionLocal
+from app import crud, schemas
 
 router = APIRouter(prefix="/students")
 
@@ -12,7 +11,6 @@ def get_db():
     finally:
         db.close()
 
-
 @router.post("/")
 def add_student(student: schemas.StudentBase, db=Depends(get_db)):
     return crud.create_student(db, student)
@@ -21,6 +19,6 @@ def add_student(student: schemas.StudentBase, db=Depends(get_db)):
 def list_students(db=Depends(get_db)):
     return crud.get_students(db)
 
-@router.get("/{student_id}")
+@router.delete("/{student_id}")
 def remove_student(student_id: int, db=Depends(get_db)):
     return crud.delete_student(db, student_id)

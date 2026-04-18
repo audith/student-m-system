@@ -9,7 +9,7 @@ load_dotenv()
 SECRET_KEY=os.getenv("SECRET_KEY")
 ALGORITHM="HS256"
 
-pwd_context=CryptContext(schemes=["argon2"],depecated="auto")
+pwd_context=CryptContext(schemes=["argon2"],deprecated="auto")
 
 
 def hash_password(password:str):
